@@ -33,9 +33,9 @@ app.use(session({
         path: '/',
         httpOnly: true,
         maxAge: 'COOKIE_TIMEOUT',
-        maxAge: 1000 * 60 * 60 * 24 * 1
+        maxAge: 1000 * 60 * 60 * 8
     },
-    maxAge: 1000 * 60 * 60 * 24 * 1,
+    maxAge: 1000 * 60 * 60 * 8  ,
     store: store,
     resave: false,
     saveUninitialized: false

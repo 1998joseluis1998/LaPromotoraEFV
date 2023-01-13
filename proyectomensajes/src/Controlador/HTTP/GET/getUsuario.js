@@ -11,6 +11,10 @@ var usuario = (rutas, bd) => {
     rutas.get('/iniciosesion', (req, res) => {
         res.render("iniciosesion");//urilizar render(SOLO EL NOMBRE DEL EJS en vista)
     });   
+
+    rutas.get('/inicioadmin', (req, res) => {
+        res.render("inicioadmin");//urilizar render(SOLO EL NOMBRE DEL EJS en vista)
+    });   
     
     rutas.get("/cerrarsesion", (req, res) => {
         req.logout(req.user, err => {

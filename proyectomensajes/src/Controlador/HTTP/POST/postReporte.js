@@ -1,15 +1,39 @@
 var actionReporte = (rutas, bd) => {
+
+    rutas.post('/buscarreporte', (req, res) => {
+        var reporte = {}
+        if (req.body.bususuario != "") {
+            reporte.ENVIADOR = {
+                valor: (req.body.bususuario),
+                tipo: 'contieneString'
+            }
+        }
+        if (req.body.busfecha != "") {
+            reporte.FECHA_ENVIO = {
+                valor: req.body.busfecha,
+                tipo: 'contieneString'
+            }
+        }       
+        
+        bd.cruds.crudReporte.buscarreporte(reporte, (r) => {
+            console.log("Busqueda de reporte correctamente", (r));
+            res.render("crearreporte",{datos:r})
+        });
+    });
+
+
+    /*
     rutas.post('/masivoreporte', (req, res) => {
         var reporte = {
             //mandamos los campos para la base de datos(name="")
             Mensaje: req.body.mensaje,
             Numeros: []
         };
-        /*
+        
         bd.cruds.crudCliente.buscarcliente({//filtrado por agencia}, (clientes) => {                        
             //COPIAR INTERVALOS 
 
-        })*/
+        })
 
         redirect("/esperando")        
         
@@ -24,7 +48,7 @@ var actionReporte = (rutas, bd) => {
             /*bd.cruds - crudReporte.ingresar(Reporte, (r) => {
                 console.log("Mensaje ingresado correctamente", JSON.stringify(r));
                 console.log("enviando mensaje a ",cliente[i])
-            })*/     
+            }) 
             i++
             if(i>=cliente.length){
                 clearInterval(intervalo)
@@ -50,18 +74,12 @@ var actionReporte = (rutas, bd) => {
         //termina el ultimo intervalo mandar al correo mensaje
 
 
-        rutas.post('/unoreporte', (req, res) => {
-            var unreporte = {
-
-            }
-        });
+        
 
 
         res.redirect('enviarmensaje')
     });
-
-
-
+    */
 
 
 
