@@ -77,13 +77,24 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
-            <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="/enviarmensaje" class="nav-item nav-link">Enviar Mensaje</a>
-                <a href="/enviarmasivo" class="nav-item nav-link">Programar Envio</a>
-                <a href="/crearreporte" class="nav-item nav-link">Crear Reporte</a>
+            <div class="navbar-nav ms-auto p-4 p-lg-0">                
+                <ul class="nav nav-pills">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                            aria-expanded="false">Mensaje</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/crearmensaje">Crear Mensaje</a></li>
+                            <li><a class="dropdown-item" href="/vermensaje">Ver Mensaje</a></li>
+                            <li><a class="dropdown-item" href="/enviarmensaje">Enviar Mensaje</a></li>                            
+                        </ul>
+                    </li>
+                </ul>
+                <a href="/enviarmasivo" class="nav-item nav-link">Programar Envio</a></li>
+                <a href="/saldo" class="nav-item nav-link">Saldo</a></li>
+                <a href="/crearreporte" class="nav-item nav-link">Reporte</a>
                 <a href="/cerrarsesion" class="nav-item nav-link">Cerrar Sesión</a>
             </div>
-
+        
         </div>
     </nav>
 

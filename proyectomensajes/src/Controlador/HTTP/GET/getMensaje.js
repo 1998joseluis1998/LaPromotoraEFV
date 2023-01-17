@@ -9,6 +9,12 @@ var mensaje = (rutas, bd) => {
         })  
         
     })
+
+    rutas.get('/saldo', (req, res) => {        
+        res.render('saldo')    
+    })
+
+
     
     rutas.get('/enviarmasivo',(req,res)=>{
         bd.cruds.crudMensaje.buscarmensaje({}, (mensajes) => {

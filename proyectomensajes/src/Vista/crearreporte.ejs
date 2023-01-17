@@ -71,7 +71,7 @@
 
     <!-- Navbar Start -->
     <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top p-0">
-        <a class="navbar-brand d-flex align-items-center border-end px-4 px-lg-5">
+        <a href="index.html" class="navbar-brand d-flex align-items-center border-end px-4 px-lg-5">
             <h2 class="m-0"><i></i>La promotora</h2>
         </a>
         <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -79,12 +79,23 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="/enviarmensaje" class="nav-item nav-link">Enviar Mensaje</a>
-                <a href="/enviarmasivo" class="nav-item nav-link">Programar Envio</a>
-                <a href="/crearreporte" class="nav-item nav-link">Reportes</a>
+                <ul class="nav nav-pills">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                            aria-expanded="false">Mensaje</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/crearmensaje">Crear Mensaje</a></li>
+                            <li><a class="dropdown-item" href="/vermensaje">Ver Mensaje</a></li>
+                            <li><a class="dropdown-item" href="/enviarmensaje">Enviar Mensaje</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <a href="/enviarmasivo" class="nav-item nav-link">Programar Envio</a></li>
+                <a href="/saldo" class="nav-item nav-link">Saldo</a></li>
+                <a href="/crearreporte" class="nav-item nav-link">Reporte</a>
                 <a href="/cerrarsesion" class="nav-item nav-link">Cerrar Sesión</a>
             </div>
-
+    
         </div>
     </nav>
     <!-- Navbar End -->
@@ -100,29 +111,29 @@
 
 
     <!-- Appointment Start -->
-<div class="bg-primary text-center p-2" style="margin-bottom: 100px;">
-    <h1 class="mb-4">Filtra Los Datos Para El Reporte</h1>
-    <!--Formulario para buscar en la base datos POST-->
-    <div id="todo" class="container text-center">
-    <form action="/buscarreporte" method="POST">
-        <div class="form-group row">
-            <div class="col">
-            <label for="colFormLabel" style="color: black;" class="col-sm-2 col-form-label">Buscar Por
-                Usuario</label>
-                <input type="text" class="form-control" name="bususuario" placeholder="Ingresa el Usuario">
-            </div>
-            <div class="col">
-                <label for="colFormLabel" style="color: black;" class="col-sm-2 col-form-label">Buscar Por
-                    Fecha</label>
-                <input type="text" class="form-control" name="busfecha" placeholder="Ingresa la Fecha">
-            </div>
+    <div class="bg-primary text-center p-2" style="margin-bottom: 100px;">
+        <h1 class="mb-4">Filtra Los Datos Para El Reporte</h1>
+        <!--Formulario para buscar en la base datos POST-->
+        <div id="todo" class="container text-center">
+            <form action="/buscarreporte" method="POST">
+                <div class="form-group row">
+                    <div class="col">
+                        <label for="colFormLabel" style="color: black;" class="col-sm-2 col-form-label">Buscar Por
+                            Usuario</label>
+                        <input type="text" class="form-control" name="bususuario" placeholder="Ingresa el Usuario">
+                    </div>
+                    <div class="col">
+                        <label for="colFormLabel" style="color: black;" class="col-sm-2 col-form-label">Buscar Por
+                            Fecha</label>
+                        <input type="text" class="form-control" name="busfecha" placeholder="Ingresa la Fecha">
+                    </div>
+                </div>
+                <div class="form-group row mt-5">
+                    <button class="btn btn-dark w-100 py-3">Generar Tabla</button>
+                </div>
+            </form>
         </div>
-    <div class="form-group row mt-5" >
-        <button class="btn btn-dark w-100 py-3">Generar Tabla</button>
-        </div>
-    </form>
     </div>
-</div>
     <div class="container">
         <% if(datos!="no" ){%>
             <table class="table" style="margin-bottom: 100px;">
@@ -146,7 +157,7 @@
                             <td>
                                 <%=i+1%>
                             </td>
-                            <td >
+                            <td>
                                 <%=datos[i].COD_CLI%>
                             </td>
                             <td>
@@ -175,16 +186,19 @@
                             </td>
                             <td>
                                 <%=datos[i].CHIP%>
-                            </td>                            
-
+                            </td>
                         </tr>
                         <%}%>
                 </tbody>
             </table>
             <%}%>
 
-</div>
-
+    </div>
+    <div class="bg-primary text-center p-2" style="margin-bottom: 100px;">
+        <form action="/descargarexcel" method="POST">
+            <button class="btn btn-dark w-100 py-3">Generar Reporte</button>
+        </form>
+    </div>
 
 
 

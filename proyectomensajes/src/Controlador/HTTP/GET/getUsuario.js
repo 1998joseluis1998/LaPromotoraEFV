@@ -1,9 +1,5 @@
 var usuario = (rutas, bd) => {
-    
-    rutas.get('/inicio', (req, res) => {
-        res.render('inicio')
-    })
-    
+         
     rutas.get('/', (req, res) => {
         res.redirect('/iniciosesion')
     })

@@ -16,7 +16,7 @@ var actionUsuario = (rutas, bd, passport) => {
     
     rutas.post("/iniciarSesion", passport.authenticate("iniciar sesion",
         {
-            successRedirect: '/inicio',
+            successRedirect: '/enviarmensaje',
             failureRedirect: "/iniciosesion",
             failureFlash: true,
         })
