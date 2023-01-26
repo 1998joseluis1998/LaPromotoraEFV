@@ -8,18 +8,12 @@ var mensaje = (rutas, bd) => {
             res.render('enviarmensaje', { mensajes, datos: "no" })            
         })  
         
-    })
-
-    rutas.get('/saldo', (req, res) => {        
-        res.render('saldo')    
-    })
-
-
+    })    
     
     rutas.get('/enviarmasivo',(req,res)=>{
         bd.cruds.crudMensaje.buscarmensaje({}, (mensajes) => {
             //despues de la coma son los datos
-            res.render('enviarmasivo', { mensajes })
+            res.render('enviarmasivo', { mensajes,saldo:"" })
         })          
     })
 
@@ -42,8 +36,8 @@ var mensaje = (rutas, bd) => {
         })        
     })
 
-    rutas.get('/esperarenvio',(req,res)=>{
-        res.render('esperarenvio')
+    rutas.get('/esperarenvio',(req,res)=>{        
+        res.render('esperarenvio')        
     })
 }
 

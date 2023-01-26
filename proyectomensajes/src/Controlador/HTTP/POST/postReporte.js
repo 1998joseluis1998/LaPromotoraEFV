@@ -1,6 +1,6 @@
-var actionReporte = (rutas, bd) => {
-    const env={};
+const { json } = require('body-parser');
 
+var actionReporte = (rutas, bd) => {    
     rutas.post('/buscarreporte', (req, res) => {
         var reporte = {}
         if (req.body.bususuario != "") {
@@ -16,30 +16,26 @@ var actionReporte = (rutas, bd) => {
                 tipo: 'contieneString'
             }
         }               
-       /* bd.cruds.crudReporte.buscarreporte(reporte, (r) => {
-            env.ENVIADOR={
-                valor:req.body.usuario,
-                tipo:'contieneString'                
-            }
-            //console.log("Busqueda de reporte correctamente", (r));            
-            res.render("crearreporte",{datos:r})
-        });*/
-        bd.cruds.crudReporte.buscarreporte(reporte, (r) => {
-            const excel = require('./../Reporte.js');
-            res.download(excel(r, 'mensajes', ['key', 'geojson'])); 
-            console.log("Busqueda de reporte correctamente", (r));                        
+      
+        bd.cruds.crudReporte.buscarreporte(reporte, (r) => {                               
+            res.render("crearreporte", { datos: r ,env:req.body.bususuario})
+         //   console.log("Busqueda de reporte correctamente", (r));                        
         });
     });
     
-    rutas.post('/descargarexcel', (req, res) => {                           
-        bd.cruds.crudReporte.buscarreporte(env, (r) => {            
-            //console.log("Busqueda de reporte correctamente", (r));            
+    rutas.post('/descargarexcel', (req, res) => {
+        console.log(req.body.env)
+        var reporte = {}
+        reporte.ENVIADOR = {
+            valor: (req.body.env),
+            tipo: 'contieneString'
+            }
+        bd.cruds.crudReporte.buscarreporte(reporte, (r) => {            
+            console.log("Busqueda de reporte correctamente", (r));      
             const excel = require('./../Reporte.js');
-            res.download(excel(r, 'mensajes', ['key', 'geojson']));             
+            res.download(excel(JSON.parse(JSON.stringify(r)), 'mensajes', ['key', '__v','_id']));
         });
-    });   
-    
-   
+    });          
     //funciones
 
 }//cerramos todo

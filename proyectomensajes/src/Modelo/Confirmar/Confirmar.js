@@ -1,31 +1,31 @@
 var nodemailer = require('nodemailer');
 
-module.exports = (email) => {
+module.exports = (email,msg) => {
     //const auth = require('./Cuenta.js');
     
     const auth = {
-        user: 'telemedicinaunifranz@gmail.com',
-        pass: 'bgfnivhvouxpwpht'
+        user: 'jlrodriguez@lapromotora.com.bo',
+        pass: 'Clave1234*'
     }
 
     var transporter = nodemailer.createTransport({
-        host: 'smtp.gmail.com',
-        port: 465,
-        secure: true,
-        requireTLS: true,
+        host: 'smtp.office365.com',
+        port: '587',
         auth: {
-            user: 'telemedicinaunifranz@gmail.com',
-            pass: 'bgfnivhvouxpwpht'
+            user: 'jlrodriguez@lapromotora.com.bo',
+            pass: 'Clave1234*'
         },
+        secureConnection: false,
         tls: {
-            rejectUnauthorized: false
-        }
+            ciphers: 'SSLv3' ,            
+            rejectUnauthorized: false            
+            }        
     });
     var mailOptions = {
         from: auth.user,
         to: email,
         subject: 'Envio de mensajes(La Promotora)',
-        text: 'Mensajes enviados correctamente'
+        text: msg
     };
 
     transporter.sendMail(mailOptions, function (error, info) {
