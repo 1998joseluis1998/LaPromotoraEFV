@@ -105,7 +105,7 @@ var actionMensaje = (rutas, bd) => {
                                 }
                                 num++;
                             });
-                        }, 2000);
+                        }, 4000);
                         res.render('esperarenvio', { datos: datosgrupo })
                         //aqui no
                     } else {
@@ -165,7 +165,7 @@ var actionMensaje = (rutas, bd) => {
                                     reporte.ENVIADOR = req.user.Usuario
                                 let ruta = "http://172.24.170.20:80/sendsms?username=smsuser&password=contra&phonenumber=" + datosuno[num].Numero + "&message=" + r.Mensaje + "&[port=" + req.body.puerto + "&][report=String&][timeout=5])"
                                 console.log(ruta)
-                                /*
+                                
                                 //codigo del fetch
                                 fetch(ruta)
                                     .then(response => {
@@ -176,13 +176,14 @@ var actionMensaje = (rutas, bd) => {
                                 //codigo del fetch
                                 bd.cruds.crudReporte.ingresar(reporte, (r) => {
                                     console.log("Reporte ingresado correctamente", JSON.stringify(r));
-                                })*/
+                                })
                             } else {
                                 console.log("acabamos de mandar todo")
                                 //codigo para mandar correo
-                                /*   const confirmacion = require('./../../../Modelo/Confirmar/Confirmar.js');
-                var hash = confirmacion(req.user.Usuario,reporte.APELLIDOS_NOMBRES,reporte.NRO_CEL);
-                console.log("se envio el correo", hash)*/
+                                let mensajeenv = 'Se termino de el programado de mensajes de la agencia '+reporte.AGENCIA+"."
+                                const confirmacion = require('./../../../Modelo/Confirmar/Confirmar.js');
+                                var hash = confirmacion(req.user.Usuario, mensajeenv);
+                                console.log("se envio el correo", hash) 
                                 clearInterval(interval);
                             }
                             num++;
@@ -216,13 +217,14 @@ var actionMensaje = (rutas, bd) => {
             console.log(req.user.Usuario)
             let ruta = "http://172.24.170.20:80/sendsms?username=smsuser&password=contra&phonenumber=" + req.body.numero + "&message=" + req.body.mensajeescrito + "&[port=" + req.body.puerto + "&][report=String&][timeout=5])"
             console.log(ruta)
-            /*fetch(ruta)
+            
+            fetch(ruta)
              .then(response => {
                  return response.json()
              }).then(json => {
                  console.log(json)
              })
-            */
+            
             const fecha = require('./../Fecha.js');
             const fecha_actual = fecha();
             console.log(fecha_actual)
@@ -258,14 +260,14 @@ var actionMensaje = (rutas, bd) => {
                 let ruta = "http://172.24.170.20:80/sendsms?username=smsuser&password=contra&phonenumber=" + req.body.numero + "&message=" + r.Mensaje + "&[port=" + req.body.puerto + "&][report=String&][timeout=5])"
                 console.log(ruta)
                 //CODIGO PARA ENVIAR EL MENSAJE                
-                /*
+                
                  fetch(ruta)
                 .then(response => {
                    return response.json()
                  }).then(json => {
                      console.log(json)
                 })
-                */
+                
                 const fecha = require('./../Fecha.js');
                 const fecha_actual = fecha();
                 console.log(fecha_actual)

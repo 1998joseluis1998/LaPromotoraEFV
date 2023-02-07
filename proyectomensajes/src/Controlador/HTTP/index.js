@@ -10,6 +10,8 @@ var retorno = (passport) => {
     require('./GET/getReporte.js')(rutas, bd, passport);
     require('./GET/getUsuario.js')(rutas, bd, passport);
     require('./GET/getSaldo.js')(rutas,bd,passport);
+    require('./GET/getWhatsapp.js')(rutas);
+    
     //POST}
 
     require('./POST/postUsuario.js')(rutas, bd, passport);        
@@ -17,6 +19,7 @@ var retorno = (passport) => {
     require('./POST/postCliente.js')(rutas,bd,passport);
     require('./POST/postReporte.js')(rutas,bd,passport);
     require('./POST/postSaldo.js')(rutas,bd,passport);
+    require('./POST/postWhatsapp.js')(rutas);
     return rutas;
 
 }
