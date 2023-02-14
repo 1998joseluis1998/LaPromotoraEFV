@@ -1,14 +1,15 @@
+const multer = require('multer')
+
 var interval;
 
 var actionMensaje = (rutas, bd) => {
-    rutas.post("/parar", (req,res)=>
-    {
+    rutas.post("/parar", (req, res) => {
 
         clearInterval(interval)
         //correo
         let mensaje = 'Se cancelo el envio de los mensajes.'
         const confirmacion = require('./../../../Modelo/Confirmar/Confirmar.js');
-        var hash = confirmacion(req.user.Usuario,mensaje);
+        var hash = confirmacion(req.user.Usuario, mensaje);
         console.log("se envio el correo", hash)
         res.redirect("/saldo")
 
@@ -117,7 +118,7 @@ var actionMensaje = (rutas, bd) => {
 
         }
 
-//este funciona
+        //este funciona
 
         if (req.body.val == 1) {//para uno sola caja de texto                   
             let cliente = {}
@@ -136,10 +137,10 @@ var actionMensaje = (rutas, bd) => {
                     datosuno.push(r[d])
                 }
                 console.log("cantidad clientes uno", datosuno.length)
-                let costoenvio=datosuno.length*0.2
-                console.log("saldo disponible",saldo)
-                console.log("costo de todo el envio",costoenvio)                
-                if(saldo>costoenvio){
+                let costoenvio = datosuno.length * 0.2
+                console.log("saldo disponible", saldo)
+                console.log("costo de todo el envio", costoenvio)
+                if (saldo > costoenvio) {
                     console.log("tenemos saldo suficiente para enviar")
                     let num = 0
                     interval = setInterval(() => {
@@ -165,14 +166,14 @@ var actionMensaje = (rutas, bd) => {
                                     reporte.ENVIADOR = req.user.Usuario
                                 let ruta = "http://172.24.170.20:80/sendsms?username=smsuser&password=contra&phonenumber=" + datosuno[num].Numero + "&message=" + r.Mensaje + "&[port=" + req.body.puerto + "&][report=String&][timeout=5])"
                                 console.log(ruta)
-                                
+
                                 //codigo del fetch
                                 fetch(ruta)
                                     .then(response => {
                                         return response.json()
                                     }).then(json => {
                                         console.log(json)
-                                })                            
+                                    })
                                 //codigo del fetch
                                 bd.cruds.crudReporte.ingresar(reporte, (r) => {
                                     console.log("Reporte ingresado correctamente", JSON.stringify(r));
@@ -180,26 +181,26 @@ var actionMensaje = (rutas, bd) => {
                             } else {
                                 console.log("acabamos de mandar todo")
                                 //codigo para mandar correo
-                                let mensajeenv = 'Se termino de el programado de mensajes de la agencia '+reporte.AGENCIA+"."
+                                let mensajeenv = 'Se termino de el programado de mensajes de la agencia ' + reporte.AGENCIA + "."
                                 const confirmacion = require('./../../../Modelo/Confirmar/Confirmar.js');
                                 var hash = confirmacion(req.user.Usuario, mensajeenv);
-                                console.log("se envio el correo", hash) 
+                                console.log("se envio el correo", hash)
                                 clearInterval(interval);
                             }
                             num++;
                         });
                         // tiempo de espera por cada mensaje
                     }, 6000);
-                }else{
+                } else {
                     console.log("no tenemos saldo ve a comprar credito xd")
                     let mensaje = 'No tiene suficiente credito para programar un envio contace con el siguiente correo : dpcardenas@lapromotora.com.bo'
                     const confirmacion = require('./../../../Modelo/Confirmar/Confirmar.js');
                     var hash = confirmacion(req.user.Usuario, mensaje);
-                    console.log("se envio el correo", hash)                        
-                    
+                    console.log("se envio el correo", hash)
+
                 }
                 //CODIGO PARA MANDAR MENSAJES, GUARDAR EN LA BASE DE DATOS Y MANDAR NOTIFICACION
-                
+
                 res.render('esperarenvio', { datos: datosuno })
                 //aquí es envio de mensajes
             });
@@ -217,14 +218,14 @@ var actionMensaje = (rutas, bd) => {
             console.log(req.user.Usuario)
             let ruta = "http://172.24.170.20:80/sendsms?username=smsuser&password=contra&phonenumber=" + req.body.numero + "&message=" + req.body.mensajeescrito + "&[port=" + req.body.puerto + "&][report=String&][timeout=5])"
             console.log(ruta)
-            
+
             fetch(ruta)
-             .then(response => {
-                 return response.json()
-             }).then(json => {
-                 console.log(json)
-             })
-            
+                .then(response => {
+                    return response.json()
+                }).then(json => {
+                    console.log(json)
+                })
+
             const fecha = require('./../Fecha.js');
             const fecha_actual = fecha();
             console.log(fecha_actual)
@@ -260,14 +261,14 @@ var actionMensaje = (rutas, bd) => {
                 let ruta = "http://172.24.170.20:80/sendsms?username=smsuser&password=contra&phonenumber=" + req.body.numero + "&message=" + r.Mensaje + "&[port=" + req.body.puerto + "&][report=String&][timeout=5])"
                 console.log(ruta)
                 //CODIGO PARA ENVIAR EL MENSAJE                
-                
-                 fetch(ruta)
-                .then(response => {
-                   return response.json()
-                 }).then(json => {
-                     console.log(json)
-                })
-                
+
+                fetch(ruta)
+                    .then(response => {
+                        return response.json()
+                    }).then(json => {
+                        console.log(json)
+                    })
+
                 const fecha = require('./../Fecha.js');
                 const fecha_actual = fecha();
                 console.log(fecha_actual)
@@ -292,17 +293,107 @@ var actionMensaje = (rutas, bd) => {
                         res.redirect('enviarmensaje')
                     });
 
-                let mensaje='Mensaje enviado correctamente a ' + reporte.APELLIDOS_NOMBRES + ' con el numero de celular: ' + reporte.NRO_CEL + '.'
+                let mensaje = 'Mensaje enviado correctamente a ' + reporte.APELLIDOS_NOMBRES + ' con el numero de celular: ' + reporte.NRO_CEL + '.'
                 const confirmacion = require('./../../../Modelo/Confirmar/Confirmar.js');
-                var hash = confirmacion(req.user.Usuario,mensaje);
+                var hash = confirmacion(req.user.Usuario, mensaje);
                 console.log("se envio el correo", hash)
-
             })
         }
     });
 
+    const storage = multer.diskStorage(
+        {
+            destination: './src/Public/Archivos/',
+            filename: function (req, file, cb) {
+                cb(null, file.originalname);
+            }
+        }
+    )
+
+    const upload = multer({
+        storage: storage
+    })
+
+    //PARA ENVIAR MENSAJES EN GRUPO
+    rutas.post('/gruposms', upload.single('excelsms'), (req, res) => {
+        //codigo del mensaje para cargar a un input
+        console.log(req.file)
+        let ruta = req.file.path
+        let nombre = req.file.originalname
+        const data = require('./../sacartxt.js')
+        var dato = data(ruta, nombre);
+        console.log("que llega", dato)
+        console.log(req.body)
+        //para ver si tiene escrito algo o no
+        if (req.body.texto != "") {
+            let num = 0
+            interval = setInterval(() => {
+                if (dato.length > num) {
+                    let ruta = "http://172.24.170.20:80/sendsms?username=smsuser&password=contra&phonenumber=" + dato[num] + "&message=" + req.body.texto + "&[port=" + req.body.puerto + "&][report=String&][timeout=5])"
+                    console.log(ruta)
+                    //Aquí viene fetch
+                    fetch(ruta)
+                    .then(response => {
+                       return response.json()
+                     }).then(json => {
+                         console.log(json)
+                    })
+                    num++;
+
+                } else {
+                    console.log("ya acabo")
+                    clearInterval(interval);
+                }
+            }, 2000);
+        } else {
+            //aquí entra para el mensaje del combobox
+            let num = 0
+            bd.cruds.crudMensaje.buscar1(req.body.mensaje, (r) => {
+                console.log(r)
+                interval = setInterval(() => {
+                    if (dato.length > num) {
+                        let ruta = "http://172.24.170.20:80/sendsms?username=smsuser&password=contra&phonenumber=" + dato[num] + "&message=" + r.Mensaje + "&[port=" + req.body.puerto + "&][report=String&][timeout=5])"
+                        console.log(ruta)
+                        //Aquí viene fetch
+                        fetch(ruta)
+                        .then(response => {
+                           return response.json()
+                         }).then(json => {
+                             console.log(json)
+                        })
+                        num++
+                    } else {
+                        console.log("ya acabo go")
+                        clearInterval(interval);
+                    }
+                }, 2000);
+            });
+
+        }
 
 
+    })
+
+    //enviar mensaje individual
+    rutas.post('/sendmensaje', (req, res) => {        
+        let datos = req.body.numeros        
+        datos = datos.replaceAll(" ", "")
+        console.log("que es", datos.substr(datos.length - 1))
+        if (datos.substr(datos.length - 1) == ",") {            
+            datos = datos.substr(0, datos.length - 1)
+            console.log("Estos son ", datos)
+        }
+        else {
+            console.log("nada p")
+        }
+        //separamos por coma
+        datos = datos.split(",")        
+        console.log(datos)        
+        //estos son todos los datos
+        console.log(req.body)
+
+
+    })
 
 
     //funciones

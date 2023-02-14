@@ -15,8 +15,25 @@ const upload = multer({
     })
 
 var actionWhatsapp=(rutas)=>{
-    
-    rutas.post('/sacar',upload.single('excels'),(req,res)=>{                        
+
+    //Enviarmensaje
+    rutas.post('/msgwhatsapp',upload.single('excelmsg'),(req,res)=>{                        
+        console.log(req.file)
+        let nombre=req.file.originalname
+        let nom=nombre.slice(0, -5)
+        
+        //mandamos al codigo para reemplazar
+        const excel = require('./../Importar.js');
+        var datos=excel(req.file.path,nom)                
+        //listo pues
+        //registrar a la base de datos.
+
+
+
+        
+        //res.render('esperarenvio',{datos:"no"})
+    });
+    rutas.post('/imgwhatsapp',upload.single('excelimg'),(req,res)=>{                        
         console.log(req.file)
         let nombre=req.file.originalname
         let nom=nombre.slice(0, -5)
@@ -28,9 +45,29 @@ var actionWhatsapp=(rutas)=>{
         //res.render('esperarenvio',{datos:"no"})
     });
 
-    rutas.post('/send',(req,res)=>{
+    rutas.post('/vidwhatsapp',upload.single('excelvid'),(req,res)=>{                        
+        console.log(req.file)
+        let nombre=req.file.originalname
+        let nom=nombre.slice(0, -5)
+        
+        //mandamos al codigo para reemplazar
+        const excel = require('./../Importar.js');
+        var datos=excel(req.file.path,nom)                
+        //listo pues
+        //res.render('esperarenvio',{datos:"no"})
+    });
 
-    })
+    rutas.post('/deuwhatsapp',upload.single('exceldeu'),(req,res)=>{                        
+        console.log(req.file)
+        let nombre=req.file.originalname
+        let nom=nombre.slice(0, -5)
+        
+        //mandamos al codigo para reemplazar
+        const excel = require('./../Importar.js');
+        var datos=excel(req.file.path,nom)                
+        //listo pues
+        //res.render('esperarenvio',{datos:"no"})
+    });   
 
 
 

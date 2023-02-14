@@ -25,7 +25,7 @@ module.exports = (ruta,nombredoc) => {
     //comando para abrir cmd y iniciar un excel
     console.log(ubi)
     
-    let comando=child.spawn('cmd',['/c',ubi]);    
+    //let comando=child.spawn('cmd',['/c',ubi]);    
 
     comando.stdout.on('data',function(datos){        
         let data=datos.toString()

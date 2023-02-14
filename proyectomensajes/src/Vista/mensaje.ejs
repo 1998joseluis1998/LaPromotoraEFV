@@ -1,0 +1,114 @@
+<%- include("./Partes/Cabecera.ejs") %>
+    <!-- ENVIAR MENSAJE START -->
+    <div class="container-fluid py-6 my-6 mt-0 " style="background: linear-gradient(rgba(0, 0, 0, .75), rgba(0, 0, 0, .75)), url(../img/FondoEscritorio55.png) center center no-repeat;
+                background-size: cover; " data-wow-delay="0.1s">
+        <div class="container text-center">
+            <h1 class="display-4 text-white animated slideInDown mb-4">Enviar Mensaje</h1>
+        </div>
+    </div>
+    <!-- ENVIAR MENSAJE END -->
+
+    <!-- FORMULARIO ENVIAR START -->
+    <div class="bg-primary text-center p-5 mb-5">
+        <h1 class="mb-4">Ingresa los campos para enviar mensaje.</h1>
+        <!--Formulario para mandar con el fetch POST-->
+        <form action="/sendmensaje" method="POST">
+            <div class="row">
+                <label style="color:black" for="message">Ingresa el numero</label>
+                <input type="text" row="500" colum="40" class="form-control border-0" name="numeros"
+                    style="height: 100px">
+
+            </div>
+            <div class="row">
+                <div class="form-group col m-2">
+                    <p style="color:black">Seleccione chip de origen:</p>
+                    <select id="puerto" name="puerto">
+                        <option value="gsm-1">gsm-1
+                        <option value="gsm-2">gsm-2
+                        <option value="gsm-3">gsm-3
+                        <option value="gsm-4" selected>77487798</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row m-2" style="word-wrap: break-word;">
+                <p style="color:black">Seleccione mensaje:</p>
+                <select id="mensaje" name="mensaje" cstyle="width:10px">
+                    <%for(var i=0;i<mensajes.length;i++){%>
+                        <option value="<%=mensajes[i]._id%>">
+                            <%=mensajes[i].Mensaje%>
+                        </option>
+                        <%}%>
+                </select>
+            </div>
+            <div class="form-group row m-2" style="word-wrap: break-word;">
+                <div class="col">
+                    <p style="color:black">Ingresa Un Mensaje:</p>
+                    <p id="todo">Número de caracteres: <span id="counter"></span></p>
+                    <input type="text" id="caracter" class="form-control" name="texto" maxlength="160">
+                    </div>
+                    <div class="col ">
+                        <p>Añadir Campo De Texto:</p>
+                        <button type="button" id="add" class="p-2" onclick="ver()" style="text-size-adjust: 40px;">+</button>
+                    </div>
+                </div>
+                <div id="segundo" class="form-group row" display="none">
+                    <p >Número de caracteres: <span id="counter2"></span></p>
+                    <input type="text" id="caracter2" class="form-control" name="texto2" maxlength="160">
+                </div>
+            </div>                            
+            <div class="row mb-5">                
+                <button class="btn btn-dark w-100 py-3">Enviar Mensaje</button>
+            </div>
+    </div>
+    </form>
+    </div>
+    <!-- FORMULARIO ENVIAR END -->
+    <script>
+        var mensajeSelect = document.getElementById("mensaje")
+        var mensajeText = document.getElementById("caracter")
+        mensajeText.addEventListener("change", (e) => {
+            if (e.target.value != "") {
+                mensajeSelect.disabled = true;
+            }
+            else {
+                mensajeSelect.disabled = false;
+            }
+        })
+    </script>
+    <script>
+        function count() {
+            document.getElementById("counter2").textContent = document.getElementById("caracter2").value.length;
+            const dato = document.getElementById("counter2").textContent
+            if (dato == "160") {
+                document.getElementById("counter2").textContent = "ya no hay espacio borrar caracteres"
+            } else {
+                document.getElementById("counter2").textContent = document.getElementById("caracter2").value.length;
+            }
+        }
+        document.getElementById("caracter2").addEventListener("input", count);
+    </script>
+    <script>
+        function count() {
+            document.getElementById("counter").textContent = document.getElementById("caracter").value.length;
+            const dato = document.getElementById("counter").textContent
+            if (dato == "160") {
+                document.getElementById("counter").textContent = "ya no hay espacio borrar caracteres"
+            } else {
+                document.getElementById("counter").textContent = document.getElementById("caracter").value.length;
+            }
+        }
+        document.getElementById("caracter").addEventListener("input", count);
+    </script>
+    <script>
+        function ver() {
+            var x = document.getElementById("segundo");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
+        document.getElementById("add").addEventListener("onclick", ver);
+    </script>
+
+    <%- include("./Partes/Piedepag.ejs") %>

@@ -6,8 +6,8 @@ var actionSaldo=(rutas,bd)=>{
         fetch(ruta)
         .then(response => {
             return response.json()
-        })        
-    
+        })
+        
     })
 
 

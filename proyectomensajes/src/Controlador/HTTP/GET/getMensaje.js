@@ -39,6 +39,22 @@ var mensaje = (rutas, bd) => {
     rutas.get('/esperarenvio',(req,res)=>{        
         res.render('esperarenvio')        
     })
+
+    rutas.get('/grupomensaje',(req,res)=>{
+        bd.cruds.crudMensaje.buscarmensaje({},(mensajes)=>{
+            //despues de la coma son los datos
+            res.render('grupomensaje',{mensajes})
+        }) 
+        
+    })
+
+    rutas.get('/mensaje',(req,res)=>{
+        bd.cruds.crudMensaje.buscarmensaje({},(mensajes)=>{
+            //despues de la coma son los datos
+            res.render('mensaje',{mensajes})
+        }) 
+        
+    })
 }
 
 module.exports = mensaje;
