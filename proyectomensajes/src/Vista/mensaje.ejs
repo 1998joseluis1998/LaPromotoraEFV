@@ -43,7 +43,7 @@
             <div class="form-group row m-2" style="word-wrap: break-word;">
                 <div class="col">
                     <p style="color:black">Ingresa Un Mensaje:</p>
-                    <p id="todo">Número de caracteres: <span id="counter"></span></p>
+                    <p id="todo">Número de caracteres: <span id="counter">0</span>/160</p>
                     <input type="text" id="caracter" class="form-control" name="texto" maxlength="160">
                     </div>
                     <div class="col ">
@@ -51,8 +51,9 @@
                         <button type="button" id="add" class="p-2" onclick="ver()" style="text-size-adjust: 40px;">+</button>
                     </div>
                 </div>
-                <div id="segundo" class="form-group row" display="none">
-                    <p >Número de caracteres: <span id="counter2"></span></p>
+                <div id="segundo" style="display: none;" class="form-group row" >
+                    <p >Número de caracteres: <span id="counter2">0</span>/160</p>
+                    <input style="display: none" name="val" id="val" value="0">
                     <input type="text" id="caracter2" class="form-control" name="texto2" maxlength="160">
                 </div>
             </div>                            
@@ -63,6 +64,24 @@
     </form>
     </div>
     <!-- FORMULARIO ENVIAR END -->
+    <script>
+        function ver() {
+            var x = document.getElementById("segundo");
+            var val=document.getElementById("val");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+                console.log("muestro")
+                val.value=1
+                console.log(val.value)
+            } else {
+                x.style.display = "none";
+                console.log("oculto")
+                val.value=0
+                console.log(val.value)
+            }
+        }
+        document.getElementById("add").addEventListener("onclick", ver);
+    </script>
     <script>
         var mensajeSelect = document.getElementById("mensaje")
         var mensajeText = document.getElementById("caracter")
@@ -88,27 +107,19 @@
         document.getElementById("caracter2").addEventListener("input", count);
     </script>
     <script>
+        
+
         function count() {
-            document.getElementById("counter").textContent = document.getElementById("caracter").value.length;
+            document.getElementById("counter").textContent = document.getElementById("caracter").value.length;            
             const dato = document.getElementById("counter").textContent
-            if (dato == "160") {
-                document.getElementById("counter").textContent = "ya no hay espacio borrar caracteres"
+            if (dato>=160) {
+                document.getElementById("counter").textContent = "ya no hay espacio borrar caracteres"                
             } else {
-                document.getElementById("counter").textContent = document.getElementById("caracter").value.length;
+                document.getElementById("counter").textContent = document.getElementById("caracter").value.length;                
             }
         }
         document.getElementById("caracter").addEventListener("input", count);
     </script>
-    <script>
-        function ver() {
-            var x = document.getElementById("segundo");
-            if (x.style.display === "none") {
-                x.style.display = "block";
-            } else {
-                x.style.display = "none";
-            }
-        }
-        document.getElementById("add").addEventListener("onclick", ver);
-    </script>
+    
 
     <%- include("./Partes/Piedepag.ejs") %>

@@ -321,23 +321,23 @@ var actionMensaje = (rutas, bd) => {
         let ruta = req.file.path
         let nombre = req.file.originalname
         const data = require('./../sacartxt.js')
-        var dato = data(ruta, nombre);
-        console.log("que llega", dato)
+        var datos = data(ruta, nombre);
+        console.log("que llega", datos)
         console.log(req.body)
         //para ver si tiene escrito algo o no
         if (req.body.texto != "") {
             let num = 0
             interval = setInterval(() => {
-                if (dato.length > num) {
-                    let ruta = "http://172.24.170.20:80/sendsms?username=smsuser&password=contra&phonenumber=" + dato[num] + "&message=" + req.body.texto + "&[port=" + req.body.puerto + "&][report=String&][timeout=5])"
+                if (datos.length > num) {
+                    let ruta = "http://172.24.170.20:80/sendsms?username=smsuser&password=contra&phonenumber=" + datos[num] + "&message=" + req.body.texto + "&[port=" + req.body.puerto + "&][report=String&][timeout=5])"
                     console.log(ruta)
                     //Aquí viene fetch
-                    fetch(ruta)
+                    /*fetch(ruta)
                     .then(response => {
                        return response.json()
                      }).then(json => {
                          console.log(json)
-                    })
+                    })*/
                     num++;
 
                 } else {
@@ -351,16 +351,16 @@ var actionMensaje = (rutas, bd) => {
             bd.cruds.crudMensaje.buscar1(req.body.mensaje, (r) => {
                 console.log(r)
                 interval = setInterval(() => {
-                    if (dato.length > num) {
-                        let ruta = "http://172.24.170.20:80/sendsms?username=smsuser&password=contra&phonenumber=" + dato[num] + "&message=" + r.Mensaje + "&[port=" + req.body.puerto + "&][report=String&][timeout=5])"
+                    if (datos.length > num) {
+                        let ruta = "http://172.24.170.20:80/sendsms?username=smsuser&password=contra&phonenumber=" + datos[num] + "&message=" + r.Mensaje + "&[port=" + req.body.puerto + "&][report=String&][timeout=5])"
                         console.log(ruta)
                         //Aquí viene fetch
-                        fetch(ruta)
+                        /*fetch(ruta)
                         .then(response => {
                            return response.json()
                          }).then(json => {
                              console.log(json)
-                        })
+                        })*/
                         num++
                     } else {
                         console.log("ya acabo go")
@@ -391,7 +391,92 @@ var actionMensaje = (rutas, bd) => {
         console.log(datos)        
         //estos son todos los datos
         console.log(req.body)
+        var a=req.body.val
+       if(a==true){
+        console.log("aquí tenemos 2 cajas")
+        if (req.body.texto != "") {
+            let num = 0
+            interval = setInterval(() => {
+                if (datos.length > num) {
+                    let ruta = "http://172.24.170.20:80/sendsms?username=smsuser&password=contra&phonenumber=" + datos[num] + "&message=" + req.body.texto + "&[port=" + req.body.puerto + "&][report=String&][timeout=5])"
+                    console.log("ruta :",ruta)
+                    //Aquí viene fetch
+                    /*fetch(ruta)
+                    .then(response => {
+                       return response.json()
+                     }).then(json => {
+                         console.log(json)
+                    })*/
+                    
+                    if (req.body.texto2 != ""){
+                        let ruta2 = "http://172.24.170.20:80/sendsms?username=smsuser&password=contra&phonenumber=" + datos[num] + "&message=" + req.body.texto2 + "&[port=" + req.body.puerto + "&][report=String&][timeout=5])"
+                        console.log("ruta 2:",ruta2)
+                        //Aquí viene fetch
+                    /*fetch(ruta)
+                    .then(response => {
+                       return response.json()
+                     }).then(json => {
+                         console.log(json)
+                    })*/
+                    }
+                    
 
+                    num++;
+
+                } else {
+                    console.log("ya acabo")
+                    clearInterval(interval);
+                }
+            }, 10000);
+        } 
+       }else{
+        console.log("aquí tenemos 1 caja cajas")
+        if (req.body.texto != "") {
+            let num = 0
+            interval = setInterval(() => {
+                if (datos.length > num) {
+                    let ruta = "http://172.24.170.20:80/sendsms?username=smsuser&password=contra&phonenumber=" + datos[num] + "&message=" + req.body.texto + "&[port=" + req.body.puerto + "&][report=String&][timeout=5])"
+                    console.log(ruta)
+                    //Aquí viene fetch
+                    /*fetch(ruta)
+                    .then(response => {
+                       return response.json()
+                     }).then(json => {
+                         console.log(json)
+                    })*/
+                    num++;
+
+                } else {
+                    console.log("ya acabo")
+                    clearInterval(interval);
+                }
+            }, 2000);
+        } else {
+            //aquí entra para el mensaje del combobox
+            let num = 0
+            bd.cruds.crudMensaje.buscar1(req.body.mensaje, (r) => {
+                console.log(r)
+                interval = setInterval(() => {
+                    if (datos.length > num) {
+                        let ruta = "http://172.24.170.20:80/sendsms?username=smsuser&password=contra&phonenumber=" + datos[num] + "&message=" + r.Mensaje + "&[port=" + req.body.puerto + "&][report=String&][timeout=5])"
+                        console.log(ruta)
+                        //Aquí viene fetch
+                        /*fetch(ruta)
+                        .then(response => {
+                           return response.json()
+                         }).then(json => {
+                             console.log(json)
+                        })*/
+                        num++
+                    } else {
+                        console.log("ya acabo go")
+                        clearInterval(interval);
+                    }
+                }, 2000);
+            });
+
+        }
+       }
 
     })
 
